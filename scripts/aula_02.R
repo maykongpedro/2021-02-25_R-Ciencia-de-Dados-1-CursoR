@@ -36,7 +36,8 @@ imdb <-
   readxl::read_excel(
     "dados/imdb_nao_estruturada.xlsx",
     skip = 4,
-    col_names = FALSE
+    col_names = FALSE,
+    n_max = 3713
   )
 
 
