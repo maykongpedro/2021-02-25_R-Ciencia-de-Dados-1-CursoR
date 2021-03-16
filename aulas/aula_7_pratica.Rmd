@@ -1,0 +1,65 @@
+---
+title: "Estados do Brasil"
+author: "Maykon Gabriel"
+date: "`r Sys.Date()`"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+# Carregar pacotes
+library(tidyverse)
+
+# Carregar a base de dados
+dados_brasil <-
+  read_csv2(
+    "https://raw.githubusercontent.com/curso-r/202102-r4ds-1/master/pratica/dados_brasil.csv"
+  )
+
+```
+
+# Introdução
+
+Existem `r nrow(dados_brasil)` estados no Brasil.
+
+# População
+
+```{r include=FALSE}
+estado_maior_pop <- 
+  dados_brasil %>% 
+  dplyr::select(uf, populacao_estimada) %>% 
+  dplyr::arrange(desc(populacao_estimada)) %>% 
+  dplyr::slice(1)
+
+
+nome_estado_maior_pop <-
+  estado_maior_pop %>% 
+  dplyr::pull(uf)
+
+
+numero_estado_maior_pop <- 
+  estado_maior_pop %>% 
+  dplyr::mutate(
+    populacao_estimada_milhoes = round(populacao_estimada/1000000, 1)) %>% 
+  dplyr::pull(populacao_estimada_milhoes)
+
+```
+
+Fonte dos dados:
+
+```{r echo=FALSE, out.width="50%", fig.align='center'}
+knitr::include_graphics("https://www.agenciaconexoes.org/wp-content/uploads/2019/07/ibge.jpg")
+```
+
+O esaado com maior população estimada é `r nome_estado_maior_pop`, com `r numero_estado_maior_pop` milhões de habitantes.\
